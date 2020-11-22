@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 const config = {
-	entry: { app: "./src/app.js", cart: "./src/cart.js" },
+	entry: "./src/app.js",
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "app.js",
