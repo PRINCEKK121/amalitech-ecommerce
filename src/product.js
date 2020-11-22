@@ -1,6 +1,7 @@
 import Cart from "./cart";
 import { View } from "./ui";
 import { select, selectAll, activateThisIn } from "./utilities";
+import { Notification } from "./ui";
 const productsData = require("./products.json");
 
 const Product = {
@@ -86,12 +87,12 @@ const Product = {
 			selectedColor = select(".color-picker .cl.active");
 
 		if (!selectedColor) {
-			window.alert("Please select color");
+			Notification.send("Please select color");
 			return;
 		}
 
 		if (!selectedSize) {
-			window.alert("Please select size");
+			Notification.send("Please select size");
 			return;
 		}
 
