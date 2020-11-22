@@ -23,6 +23,27 @@ body {
 		display: block;
 	}
 
+	.notification {
+		width: 300px;
+		position: fixed;
+		top: 10px;
+		background: black;
+		border-radius: 5px;
+		right: -340px;
+		color: #fff;
+		padding: 18px;
+		box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+			0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+		background-color: #333;
+		margin: 0 auto;
+		font-size: 0.9em;
+		transition: right ease-out 300ms;
+
+		&.show {
+			right: 20px;
+		}
+	}
+
 	.button-set {
 		margin: 10px 0;
 
@@ -67,7 +88,7 @@ body {
 	}
 
 	.input-field {
-		font-size: 0.8rem;
+		font-size: 0.75rem;
 		padding: 10px;
 		border-radius: 5px;
 		border: 1px solid #d7d7d7;
@@ -333,7 +354,7 @@ main.cart-page {
 					}
 
 					&.del {
-						opacity: 0.6;
+						opacity: 0.5;
 					}
 				}
 			}
@@ -351,6 +372,9 @@ main.cart-page {
 					margin: 0 2px;
 					padding: 5px;
 					border: none;
+					&:disabled {
+						background: transparent;
+					}
 				}
 
 				& > button {
@@ -385,17 +409,18 @@ main.cart-page {
 			}
 
 			.button-set {
-				margin-top: 4em;
+				margin-top: 3em;
 			}
 		}
 
 		.btn {
 			height: 40px;
-			padding: 5px 15px;
+			padding: 5px 30px;
 			border-radius: 5px;
 			background: $primary;
 			color: #fff;
 			font-size: 0.9em;
+			margin-left: 8px;
 		}
 	}
 

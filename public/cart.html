@@ -36,9 +36,9 @@
 
 										<div class="row-info" style="margin-top: 8px">
 											<b>Color:</b>
-											<span data-var="customization" data-pick="color"></span> |
+											<span data-var="customization.color"></span> |
 											<b>Size:</b>
-											<span data-var="customization" data-pick="size"></span>
+											<span data-var="customization.size"></span>
 										</div>
 									</div>
 								</div>
@@ -59,9 +59,9 @@
 										<button class="ctrl" data-function="sub">-</button>
 										<input
 											type="text"
-											data-var="customization"
-											data-pick="quantity"
+											data-var="customization.quantity"
 											class="quantity-field"
+											disabled
 										/>
 										<button class="ctrl" data-function="add">+</button>
 									</div>
@@ -69,17 +69,16 @@
 									<div style="margin-left: 10px">
 										<div class="row-info">UNIT PRICE</div>
 										@
-										<span data-var="price" data-pick="currency"></span>
+										<span data-var="price.currency"></span>
 										<span
-											data-var="price"
-											data-pick="amount"
+											data-var="price.amount"
 											style="margin-left: -4px"
 										></span>
 									</div>
 								</div>
 							</td>
 							<td>
-								<span data-var="price" data-pick="currency"></span>
+								<span data-var="price.currency"></span>
 								<strong data-var="total" style="margin-left: -4px"></strong>
 							</td>
 						</tr>
@@ -123,14 +122,17 @@
 					</div>
 
 					<p class="primary--text" style="font-weight: 600">Apply promo code</p>
-					<input
-						data-var="promo-code"
-						maxlength="5"
-						type="text"
-						class="input-field"
-						placeholder="Enter promo code"
-					/>
-					<button class="btn apply-code-btn">Apply</button>
+					<div class="d-flex">
+						<input
+							data-var="promo-code"
+							maxlength="5"
+							type="text"
+							class="input-field"
+							placeholder="Enter promo code"
+							style="flex-grow: 1"
+						/>
+						<button class="btn apply-code-btn">Apply</button>
+					</div>
 
 					<div class="button-set">
 						<button>Checkout</button>

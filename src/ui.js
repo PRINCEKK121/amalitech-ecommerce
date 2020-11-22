@@ -1,21 +1,32 @@
-import { select } from "./utilities";
+import { select, wait } from "./utilities";
 
 // UI module
 export const View = {
-	render(obj, renderIn) {
+	render(model, renderIn) {
 		return new Promise((resolve) => {
-			// loop thru keys and render values as content
-			for (const key in obj) {
-				if (obj.hasOwnProperty(key)) {
-					const value = obj[key];
+			// all elements that match this key
+			let dataElements = renderIn.querySelectorAll(`[data-var]`);
 
-					// all elements that match this key
-					let toElements = renderIn.querySelectorAll(`[data-var=${key}]`);
-					this.insertContentIntoDOM(renderIn, toElements, value);
-				}
+			/**
+			 * Get value from object using string property accessor
+			 *
+			 * @param obj Object from which to get property
+			 * @param str String property accessor
+			 *
+			 * @returns {any}
+			 */
+			function ref(obj, str) {
+				return str.split(".").reduce(function (o, x) {
+					return o ? o[x] : "";
+				}, obj);
 			}
 
-			resolve(obj);
+			dataElements.forEach((element) => {
+				const value = ref(model, element.dataset.var);
+				this.insertContentIntoDOM(renderIn, [element], value);
+			});
+
+			resolve(model);
 		});
 	},
 
@@ -33,12 +44,11 @@ export const View = {
 				let copy = component.cloneNode(true);
 				copy.classList.remove("template");
 
-				for (const key in item) {
-					if (item.hasOwnProperty(key)) {
-						const value = item[key];
-
-						// set values to data attributes
-						if (config.assignDataAttr) {
+				// set values to data attributes
+				if (config.assignDataAttr) {
+					for (const key in item) {
+						if (item.hasOwnProperty(key)) {
+							const value = item[key];
 							copy.setAttribute(`data-${key}`, value);
 						}
 					}
@@ -59,24 +69,18 @@ export const View = {
 	},
 
 	insertContentIntoDOM(renderIn, toElements, value) {
-		// console.log(toElements);
-
 		toElements.forEach((toElement) => {
-			if (toElement.matches("input, textarea")) {
+			if (toElement.matches("input, textarea, select")) {
 				// set values for form elements
-				toElement.value = toElement.dataset.pick
-					? value[toElement.dataset.pick]
-					: value;
+				toElement.value = value;
 			} else {
 				// set innertext
-				toElement.innerText = toElement.dataset.pick
-					? value[toElement.dataset.pick]
-					: value;
+				toElement.innerText = value;
 			}
 		});
 	},
 
-	update(component, key, value) {
+	update(key, value, component) {
 		let toElements = component.querySelectorAll(`[data-var=${key}]`);
 
 		this.insertContentIntoDOM(component, toElements, value);
@@ -84,16 +88,10 @@ export const View = {
 
 	getVar(key, component = null) {
 		component = component || select("body");
-
-		// dot accessor passed as key, split and construct selector
-		const keys = key.split(".");
-		const element =
-			keys.length > 1
-				? component.querySelector(`[data-var=${keys[0]}][data-pick=${keys[1]}]`)
-				: component.querySelector(`[data-var=${key}]`);
+		const element = component.querySelector(`[data-var=${key}]`);
 
 		if (element) {
-			return element.matches("input, textarea")
+			return element.matches("input, textarea, select")
 				? element.value
 				: element.innerText;
 		}
@@ -104,5 +102,26 @@ export const View = {
 		return component
 			? component.querySelector(`[data-var=${key}]`)
 			: select(`[data-var=${key}]`);
+	},
+};
+
+export const Notification = {
+	setup() {
+		!select(".notification") &&
+			document.body.insertAdjacentHTML(
+				"beforeend",
+				"<div class='notification'></div>"
+			);
+	},
+
+	send(message) {
+		const component = select(".notification");
+		component.innerText = message;
+
+		component.classList.add("show");
+
+		wait(3500).then(() => {
+			component.classList.remove("show");
+		});
 	},
 };

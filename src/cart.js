@@ -1,11 +1,13 @@
-// Car module
-import { select, selectAll } from "./utilities";
-import { View } from "./ui";
+// Cart module
+import { select, selectAll, wait } from "./utilities";
+import { View, Notification } from "./ui";
 
 const Cart = {
 	setup() {
 		this.updateCount();
 		this.mini.setup();
+
+		const orderSummary = select(".order-summary");
 
 		selectAll("table.cart .cart-item:not(.template)").forEach((node) => {
 			node.parentNode.removeChild(node);
@@ -53,26 +55,47 @@ const Cart = {
 							Cart.updateItem(index, {
 								quantity: quantityField.value,
 							});
+
+							if (Cart.appliedPromoCode) {
+								wait(800).then(() => {
+									// Update discount value
+									View.update(
+										"discount",
+										View.getVar("sub-total") / 2,
+										orderSummary
+									);
+
+									// Reapply discount
+									View.update(
+										"total-checkout",
+										View.getVar("sub-total") / 2,
+										orderSummary
+									);
+								});
+							}
 						});
 					});
 				},
 			}).then((products) => {
-				// update total checkout value
+				console.log("after list render");
+				// update sub total value
 				View.update(
-					select(".order-summary"),
 					"sub-total",
-					products
-						.map((p) => p.total)
-						.reduce((acc, cur) => {
-							return acc + cur;
-						}) - parseFloat(View.getVar("discount", select(".order-summary")))
+					products.length
+						? products
+								.map((p) => p.total)
+								.reduce((acc, cur) => {
+									return acc + cur;
+								})
+						: 0,
+					orderSummary
 				);
 
+				// Update total checkout value
 				View.update(
-					select(".order-summary"),
 					"total-checkout",
-					parseFloat(View.getVar("sub-total", select(".order-summary"))) -
-						parseFloat(View.getVar("discount", select(".order-summary")))
+					parseFloat(View.getVar("sub-total", orderSummary)),
+					orderSummary
 				);
 			});
 
@@ -82,23 +105,19 @@ const Cart = {
 
 				Cart.applyPromoCode(View.getVar("promo-code"))
 					.then(() => {
-						window.alert(
+						Notification.send(
 							"Promo code applied succefully, you have 50% discount on all products!"
 						);
 						// reset promo code
-						View.update(select(".order-summary"), "promo-code", "");
+						View.update("promo-code", "", orderSummary);
 
 						// Update discount value
-						View.update(
-							select(".order-summary"),
-							"discount",
-							View.getVar("total-checkout") / 2
-						);
+						View.update("discount", View.getVar("sub-total") / 2, orderSummary);
 					})
 					.catch(() => {
 						// Get element and add error class
 						View.getRef("promo-code").classList.add("error");
-						window.alert("Invalid code");
+						Notification.send("Invalid code");
 					});
 			});
 	},
@@ -108,7 +127,7 @@ const Cart = {
 		select("#cart-count").innerText = storedProducts.length;
 
 		select(".cart-page") &&
-			View.update(select(".cart-page"), "cart-count", storedProducts.length);
+			View.update("cart-count", storedProducts.length, select(".cart-page"));
 	},
 
 	mini: {
@@ -129,7 +148,7 @@ const Cart = {
 		async show(product) {
 			await View.render(product, this.component);
 
-			View.update(this.component, "prod-total", product.total);
+			View.update("prod-total", product.total, this.component);
 
 			// update product image
 			this.component.querySelector(
@@ -163,30 +182,27 @@ const Cart = {
 		this.setup();
 	},
 
-	promoCodes: [],
+	appliedPromoCode: false,
 
 	async applyPromoCode(code) {
-		console.log("applying code");
-
-		// check validity
 		code = code.trim();
 
 		const regex = /^[a-z0-9]+$/i;
-		const valid = code.match(regex);
+		const valid = code.match(regex); // check validity
 
 		return new Promise((resolve, reject) => {
-			if (this.promoCodes.some((c) => c === code)) {
+			if (this.appliedPromoCode) {
 				reject(code);
 				return;
 			}
 
 			if (code.length === 5 && valid) {
-				this.promoCodes.push(code);
+				this.appliedPromoCode = true;
 
 				View.update(
-					select(".order-summary"),
 					"total-checkout",
-					View.getVar("total-checkout") / 2
+					View.getVar("total-checkout") / 2,
+					select(".order-summary")
 				);
 
 				resolve(code);
@@ -196,7 +212,7 @@ const Cart = {
 		});
 	},
 
-	updateItem(index, config = {}) {
+	async updateItem(index, config = {}) {
 		const products = this.getCart();
 		products[index].customization.quantity = config.quantity;
 

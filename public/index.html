@@ -8,9 +8,9 @@
 	<body>
 		<header>
 			<nav></nav>
-			<div class="cart" style="font-size: 1.5em">
+			<a href="cart.html" class="cart" style="font-size: 1.5em">
 				🛒 <span id="cart-count">(0)</span>
-			</div>
+			</a>
 		</header>
 		<main class="product-page">
 			<div class="prod-details-wrap">
@@ -21,8 +21,8 @@
 					<h1 data-var="name" class="primary--text"></h1>
 					<span class="desc" data-var="description"></span>
 					<h2 class="price primary--text">
-						<span data-var="price" data-pick="currency"></span>
-						<span data-var="price" data-pick="amount"></span>
+						<span data-var="price.currency"></span>
+						<span data-var="price.amount"></span>
 					</h2>
 					<div class="color-picker">
 						<span class="cl template"></span>
@@ -56,16 +56,16 @@
 					<div>
 						<h3 data-var="name" class="item-name"></h3>
 						<h3>
-							<span data-var="price" data-pick="currency"></span>
-							<span data-var="price" data-pick="amount"></span>
+							<span data-var="price.currency"></span>
+							<span data-var="price.amount"></span>
 						</h3>
 						<div class="info">
-							<span data-var="customization" data-pick="color"></span>&nbsp;/
-							<span data-var="customization" data-pick="size"></span>
+							<span data-var="customization.color"></span>&nbsp;/
+							<span data-var="customization.size"></span>
 						</div>
 						<div class="quantity">
 							Quantity:
-							<span data-var="customization" data-pick="quantity"></span>
+							<span data-var="customization.quantity"></span>
 						</div>
 					</div>
 				</div>
