@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Cart</title>
+	</head>
+	<body>
+		<header>
+			<nav></nav>
+			<div class="cart" style="font-size: 1.5em">
+				🛒 (<span id="cart-count">0</span>)
+			</div>
+		</header>
+		<main class="cart-page">
+			<h1 class="d-flex">
+				<span>Cart</span>
+				<span data-var="cart-count" class="cart-chip">(0)</span>
+			</h1>
+			<div class="table-wrap">
+				<table class="cart" cellpadding="0" cellspacing="0" border="0">
+					<thead>
+						<th>Item</th>
+						<th></th>
+						<th>Quantity & Unit Price</th>
+						<th>Total Price</th>
+					</thead>
+					<tbody>
+						<tr class="cart-item template">
+							<td>
+								<div class="d-flex">
+									<div class="img"></div>
+
+									<div class="item-desc">
+										<a data-var="name" href="/"></a>
+
+										<div class="row-info" style="margin-top: 8px">
+											<b>Color:</b>
+											<span data-var="customization" data-pick="color"></span> |
+											<b>Size:</b>
+											<span data-var="customization" data-pick="size"></span>
+										</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="actions">
+									<a
+										href=""
+										class="del"
+										style="background-image: url(trash.svg)"
+									></a>
+								</div>
+							</td>
+
+							<td>
+								<div class="d-flex">
+									<div class="quantity-selector">
+										<button class="ctrl" data-function="sub">-</button>
+										<input
+											type="text"
+											data-var="customization"
+											data-pick="quantity"
+											class="quantity-field"
+										/>
+										<button class="ctrl" data-function="add">+</button>
+									</div>
+
+									<div style="margin-left: 10px">
+										<div class="row-info">UNIT PRICE</div>
+										@
+										<span data-var="price" data-pick="currency"></span>
+										<span
+											data-var="price"
+											data-pick="amount"
+											style="margin-left: -4px"
+										></span>
+									</div>
+								</div>
+							</td>
+							<td>
+								<span data-var="price" data-pick="currency"></span>
+								<strong data-var="total" style="margin-left: -4px"></strong>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<aside class="order-summary">
+				<div class="head">
+					<h3>Order Summary</h3>
+					<span><span data-var="cart-count"></span> items total</span>
+				</div>
+				<div class="body">
+					<div class="d-flex">
+						<span>Subtotal</span>
+						<span class="spacer"></span>
+						<span>$</span>
+						<span data-var="sub-total"></span>
+					</div>
+
+					<div class="d-flex">
+						<span>Sales Tax</span>
+						<span class="spacer"></span>
+						<span>$0.0</span>
+					</div>
+
+					<div class="d-flex">
+						<span>Discount</span>
+						<span class="spacer"></span>
+						<span>$</span>
+						<span data-var="discount">0.0</span>
+					</div>
+
+					<div class="d-flex">
+						<span>TOTAL</span>
+						<span class="spacer"></span>
+						<h3>
+							<span>$</span>
+							<span data-var="total-checkout"></span>
+						</h3>
+					</div>
+
+					<p class="primary--text" style="font-weight: 600">Apply promo code</p>
+					<input
+						data-var="promo-code"
+						maxlength="5"
+						type="text"
+						class="input-field"
+						placeholder="Enter promo code"
+					/>
+					<button class="btn apply-code-btn">Apply</button>
+
+					<div class="button-set">
+						<button>Checkout</button>
+					</div>
+				</div>
+			</aside>
+		</main>
+		<script src="http://localhost:8088/app.js"></script>
+	</body>
+</html>
