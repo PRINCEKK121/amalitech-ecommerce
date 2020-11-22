@@ -119,11 +119,15 @@ header {
 }
 
 main {
-	padding: 10px;
+	padding: 20px;
 	width: 80%;
 	margin: 0 auto;
 	max-width: 1400px;
 	box-sizing: border-box;
+
+	@media screen and (max-width: 1250px) {
+		width: 95%;
+	}
 }
 
 .overlay {
@@ -143,10 +147,17 @@ main {
 	display: flex;
 	flex-wrap: wrap;
 	max-width: 1300px;
+	justify-content: center;
 
 	.prod-img-wrap {
 		flex-basis: 50%;
 		margin: 0 2.5em;
+		min-height: 300px;
+
+		@media screen and (max-width: 800px) {
+			flex-basis: 90%;
+		}
+
 		// image
 		.img {
 			width: 100%;
@@ -305,10 +316,18 @@ main.cart-page {
 		padding: 0 3% 0 0;
 		box-sizing: border-box;
 		vertical-align: top;
+		margin-bottom: 30px;
+
+		@media screen and (max-width: 900px) {
+			width: 100%;
+			padding-right: 0;
+		}
 
 		table {
 			border: 1px solid #e9e9e9;
 			width: 100%;
+			margin-bottom: 10px;
+
 			border-radius: 10px;
 			box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.05);
 			border-collapse: collapse;
@@ -390,6 +409,10 @@ main.cart-page {
 		box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.05);
 		border-radius: 10px;
 		overflow: hidden;
+
+		@media screen and (max-width: 900px) {
+			width: 100%;
+		}
 
 		.head {
 			background: $primary;
