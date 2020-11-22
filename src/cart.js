@@ -124,10 +124,16 @@ const Cart = {
 
 	updateCount() {
 		let storedProducts = JSON.parse(localStorage.getItem("products"));
-		select("#cart-count").innerText = storedProducts.length;
+		select("#cart-count").innerText = storedProducts
+			? storedProducts.length
+			: 0;
 
 		select(".cart-page") &&
-			View.update("cart-count", storedProducts.length, select(".cart-page"));
+			View.update(
+				"cart-count",
+				storedProducts ? storedProducts.length : 0,
+				select(".cart-page")
+			);
 	},
 
 	mini: {
