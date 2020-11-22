@@ -1,6 +1,6 @@
-# amalitech-ecommerce-application
+# JavaScript/jQuery-based Ecommerce Application
 
-Empty project.
+A Product Details Page (PDP) from where you add a product to cart then land on cart page, and to checkout pages.
 
 ## Building and running on localhost
 

@@ -1,28 +1,29 @@
 {
-  "name": "amalitech-ecommerce-application",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "scripts": {
-    "clean": "rm dist/bundle.js",
-    "build-dev": "webpack -d --mode development",
-    "build-prod": "webpack -p --mode production"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "webpack": "^5.6.0",
-    "webpack-cli": "^4.2.0",
-    "css-loader": "^5.0.1",
-    "sass-loader": "^10.1.0",
-    "node-sass": "^5.0.0",
-    "style-loader": "^1.2.1",
-    "eslint": "^7.13.0",
-    "url-loader": "^4.1.1",
-    "prettier": "^2.2.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4"
-  }
+	"name": "amalitech-ecommerce-application",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"scripts": {
+		"clean": "rm dist/bundle.js",
+		"build-dev": "webpack-dev-server -d --colors --progress --devtool source-map",
+		"build-prod": "webpack -p"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"css-loader": "^5.0.1",
+		"eslint": "^7.13.0",
+		"eslint-config-prettier": "^6.15.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"node-sass": "^5.0.0",
+		"prettier": "^2.2.0",
+		"sass-loader": "^10.1.0",
+		"style-loader": "^1.2.1",
+		"url-loader": "^4.1.1",
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11",
+		"webpack-dev-server": "^3.11.0"
+	}
 }

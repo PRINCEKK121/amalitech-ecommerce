@@ -1,0 +1,32 @@
+[
+	{
+		"id": "PROD-1",
+		"name": "Boys' Stillwater Sherpa 1/4-Zip",
+		"description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+		"rating": 4,
+		"image": "prod-img-1.jpg",
+		"price": { "amount": "98.50", "currency": "$" },
+		"sizes": [
+			{ "text": "2T" },
+			{ "text": "3T" },
+			{ "text": "4T" },
+			{ "text": "5" },
+			{ "text": "6" },
+			{ "text": "7" }
+		],
+		"colors": [
+			{
+				"text": "Orange",
+				"hex": "#f39c12"
+			},
+			{
+				"text": "Nectarine",
+				"hex": "#ffbe76"
+			},
+			{
+				"text": "Purple",
+				"hex": "#8e44ad"
+			}
+		]
+	}
+]
